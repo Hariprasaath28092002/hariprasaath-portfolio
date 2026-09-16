@@ -10,9 +10,9 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
-        "https://your-portfolio.vercel.app"
-    ],
+    "http://localhost:5173",
+    "https://your-actual-portfolio.vercel.app"
+]cd bac
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
