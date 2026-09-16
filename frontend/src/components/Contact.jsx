@@ -14,7 +14,7 @@ export default function Contact() {
     email: "",
     message: "",
   });
-
+  2
   const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
@@ -24,53 +24,50 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    e.preventDefault();
+  setStatus("Sending...");
 
-    setStatus("Sending...");
+  try {
+    const apiUrl = import.meta.env.VITE_API_URL;
 
-    try {
+    console.log("API URL:", apiUrl);
 
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/contact`,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.success) {
-
-        setStatus("Message sent successfully!");
-
-        setFormData({
-          name: "",
-          email: "",
-          message: "",
-        });
-
-      } else {
-        setStatus("Something went wrong.");
-      }
-
-    } catch (error) {
-
-      console.error(error);
-
-      setStatus(
-        "Unable to send message. Please contact me directly."
-      );
+    if (!apiUrl) {
+      throw new Error("VITE_API_URL is not configured");
     }
-  };
 
+    const response = await fetch(`${apiUrl}/api/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      setStatus("Message sent successfully!");
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } else {
+      setStatus("Something went wrong.");
+    }
+  } catch (error) {
+    console.error("Contact form error:", error);
+    setStatus("Unable to send message. Please contact me directly.");
+  }
+};
   return (
     <section className="section contact" id="contact">
 
