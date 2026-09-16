@@ -11,7 +11,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
     "http://localhost:5173",
-    "https://your-actual-portfolio.vercel.app"
+    "https://hariprasaath-portfolio.vercel.app/"
 ]cd bac
     allow_credentials=True,
     allow_methods=["*"],
