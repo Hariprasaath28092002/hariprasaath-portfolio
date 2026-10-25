@@ -151,7 +151,7 @@ export default function Hero() {
 
         {/* Profile Photo */}
         <img
-          src="/profile.jpg"
+          src="/profile.png"
           alt="Hariprasaath Sridhar"
           className="profile-photo"
           onError={(e) => {
